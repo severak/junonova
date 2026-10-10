@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JunoNova</title>
+    <style>
+        html {
+            font-family: sans-serif;
+        }
+
+        body {
+            background-color: grey;
+        }
+
+        .panel {
+            background-color: #000066;
+            color: white;
+            padding: 1em;
+            overflow-x: scroll;
+        }
+
+        button, label, input {
+            font-size: small;
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+
+        .sections {
+            display: flex;
+        }
+
+        .section {
+            padding: 0 0.5rem;
+        }
+
+        .section h2 {
+            text-align: center;
+            background-color: darkred;
+            margin-top: 0;
+        }
+
+        .cols {
+            display: flex;
+        }
+
+        .slider, .switch {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 0.25rem;
+        }
+
+        .slider input {
+            margin-block-end: 20px;
+            writing-mode: vertical-lr;
+            direction: rtl;
+            margin: auto;
+        }
+
+        label.ub-checkbutton, select, button {
+            border: 1px solid lightgray;
+            border-radius: 3px;
+            padding: 5px;
+            display: inline-block;
+            margin-bottom: 3px;
+        }
+
+        input[type=checkbox].ub-checkbutton {
+            display: none;
+        }
+
+        input[type=checkbox].ub-checkbutton:checked ~ label.ub-checkbutton {
+            color: darkblue;
+            background-color: white;
+        }
+
+        #warning { color: red; font-weight: bold; }
+
+        .nope { text-decoration: line-through 2px; }
+    </style>
+</head>
+<body>
+    <div class="panel">
+        <h1><small>Rolation</small> JunoNova</h1>
+        <div class="sections">
+            <div class="section">
+                <h2>MIDI</h2>
+                <div class="cols">
+                    <div class="switch">
+                        <select id="midi_devices">
+                            <option disabled selected>no devices</option>
+                        </select>
+                        <button id="init">INIT PRESET</button>
+                        <button id="send">SEND!</button>
+                        <div id="warning">MIDI not connected!</div>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <h2>LFO</h2>
+                <div class="cols">
+                    <div class="slider">
+                        <label for="lfo_rate">RATE</label>
+                        <input type="range" id="lfo_rate" min="0" max="127" class="vertical">
+                    </div>
+                    <div class="slider">
+                        <label for="lfo_delay">DELAY</label>
+                        <input type="range" id="lfo_delay" min="0" max="127" class="vertical">
+                    </div>
+                    <div class="switch">
+                        <label for="lfo_trig" class="nope">TRIG<br>MODE</label>
+                        <select id="lfo_trig">
+                            <option>auto</option>
+                            <option>man</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <h2>DCO</h2>
+                <div class="cols">
+                    <div class="slider">
+                        <label for="dco_lfo">LFO</label>
+                        <input type="range" id="dco_lfo" min="0" max="127" class="vertical">
+                    </div>
+                    <div class="slider">
+                        <label for="dco_pwm" class="nope">PWM</label>
+                        <input type="range" id="dco_pwm" min="0" max="127" class="vertical">
+                    </div>
+                    <div class="switch">
+                        <label for="dco_pwm_src" class="nope">PWM<br>SRC</label>
+                        <select id="dco_pwm_src">
+                            <option>lfo</option>
+                            <option>man</option>
+                            <option>env</option>
+                        </select>
+                    </div>
+                    <div class="switch">
+                        <div>
+                            <input id="dco_part_pulse" type="checkbox" class="ub-checkbutton">
+                            <label for="dco_part_pulse" class="ub-checkbutton">PULSE</label>
+                        </div>
+                        <div>
+                            <input id="dco_part_saw" type="checkbox" class="ub-checkbutton">
+                            <label for="dco_part_saw" class="ub-checkbutton">SAW</label>
+                        </div>
+                        <div>
+                            <input id="dco_part_sub" type="checkbox" class="ub-checkbutton">
+                            <label for="dco_part_sub" class="ub-checkbutton">SUB</label>
+                        </div>
+                    </div>
+                    <div class="slider">
+                        <label for="dco_sub">SUB</label>
+                        <input type="range" id="dco_sub" min="0" max="127" class="vertical">
+                    </div>
+                    <div class="slider">
+                        <label for="dco_noise">NOISE</label>
+                        <input type="range" id="dco_noise" min="0" max="127" class="vertical">
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <h2 class="nope">HPF</h2>
+                <div class="cols">
+                    <div class="slider">
+                        <label for="hpf">FREQ</label>
+                        <input type="range" id="hpf" min="0" max="127" class="vertical">
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <h2>VCF</h2>
+                <div class="cols">
+                    <div class="slider">
+                        <label for="vcf_freq">FREQ</label>
+                        <input type="range" id="vcf_freq" min="0" max="127" class="vertical">
+                    </div>
+                    <div class="slider">
+                        <label for="vcf_res" class="nope">RES</label>
+                        <input type="range" id="vcf_res" min="0" max="127" class="vertical">
+                    </div>
+                    <div class="switch">
+                        <label for="vcf_pol" class="nope">POL</label>
+                        <select id="vcf_pol">
+                            <option>up</option>
+                            <option>down</option>
+                        </select>
+                    </div>
+                    <div class="slider">
+                        <label for="vcf_env" class="nope">ENV</label>
+                        <input type="range" id="vcf_env" min="0" max="127" class="vertical">
+                    </div>
+                    <div class="slider">
+                        <label for="vcf_lfo" class="nope">LFO</label>
+                        <input type="range" id="vcf_lfo" min="0" max="127" class="vertical">
+                    </div>
+                    <div class="slider">
+                        <label for="vcf_kbd" class="nope">KBD</label>
+                        <input type="range" id="vcf_kbd" min="0" max="127" class="vertical">
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <h2>VCA</h2>
+                <div class="cols">
+                    <div class="switch">
+                        <label for="vcf_pol">MODE</label>
+                        <select id="vca_mode">
+                            <option>gate</option>
+                            <option>env</option>
+                        </select>
+                    </div>
+                    <div class="slider">
+                        <label for="vca_level" class="nope">LVL</label>
+                        <input type="range" id="vca_level" min="0" max="127" class="vertical">
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <h2>ENV</h2>
+                <div class="cols">
+                    <div class="slider">
+                        <label for="env_a">A</label>
+                        <input type="range" id="env_a" min="0" max="127" class="vertical">
+                    </div>
+                    <div class="slider">
+                        <label for="env_d">D</label>
+                        <input type="range" id="env_d" min="0" max="127" class="vertical">
+                    </div>
+                    <div class="slider">
+                        <label for="env_s">S</label>
+                        <input type="range" id="env_s" min="0" max="127" class="vertical">
+                    </div>
+                    <div class="slider">
+                        <label for="env_r">R</label>
+                        <input type="range" id="env_r" min="0" max="127" class="vertical">
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <h2 class="nope">CHORUS</h2>
+                <div class="cols">
+                    <div class="switch">
+                        <label for="chorus_mode">MODE</label>
+                        <select id="chorus_mode">
+                            <option>off</option>
+                            <option>I.</option>
+                            <option>II.</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p>Simplified control panel for Novation Mininova.</p>
+        <p>Select patch you want to edit and program it like it's Roland Juno 60 and then press SAVE on Mininova itself and save preset you just created.</p>
+        <p>Work in progress! Sections and controls which are <span class="nope">crossed over</span> are not yet implemented.</p>
+    </div>
+
+    <script>
+        // WARNING
+        //
+        // Following code is in early stage of development so it's absolute mess. It will bite you when reading it.
+        //
+        let dummyOut = {
+            send: function () {}
+        };
+
+        let globalMidiAccess = false;
+        let midiOut = dummyOut;
+
+        function initControls() {
+            document.getElementById('midi_devices').onchange = function () {
+                console.log('selected out = ' + document.getElementById('midi_devices').value);
+                console.log(globalMidiAccess.outputs);
+                // console.log(globalMidiAccess.outputs[document.getElementById('midi_devices').value]);
+                midiOut = globalMidiAccess.outputs.get(document.getElementById('midi_devices').value);
+                midiOut.open();
+            };
+
+            document.getElementById('send').onclick = function (ev) {
+                updateVoices();
+                updateEnvelopes();
+                updateLfo();
+               sendCc(74, document.getElementById('vcf_freq').value);
+            }
+
+            document.getElementById('init').onclick = function (ev) {
+                initPatch();
+            }
+        }
+
+        function initPatch()
+        {
+            sendCc(19, 12); // OSC1 pulse
+            sendCc(29, 2); // OSC2 saw
+            sendCc(41, 13); // OSC3 sqr
+            sendCc(48, 52); // OSC3 -12 semitones
+
+            // MODULATION MATRIX
+
+            // slot 1 - LFO1 +/- -> OSC123 pitch
+            sendNrpn(1, 83, 7);
+            sendNrpn(1, 87, 0); // really 0
+
+
+        }
+
+        function updateLfo()
+        {
+
+            sendNrpn(0, 76, document.getElementById('lfo_rate').value);
+            sendNrpn(0, 74, document.getElementById('lfo_delay').value);
+        }
+
+        function updateVoices()
+        {
+            sendCc(51, document.getElementById('dco_part_pulse').checked*60); // pulse
+            sendCc(52, document.getElementById('dco_part_saw').checked*60); // saw
+            sendCc(53, document.getElementById('dco_part_sub').checked*(document.getElementById('dco_sub').value/127)*60); // sub
+            sendCc(56, document.getElementById('dco_noise').value); // noise
+
+            // LFO -> DCO intensity
+            sendNrpn(1, 86, (document.getElementById("dco_lfo").value/2));
+        }
+
+        function updateEnvelopes()
+        {
+            // update amplitude env
+            if (document.getElementById('vca_mode').value=='gate') {
+                sendCc(73, 0); // attack
+                sendCc(75, 0); // decay
+                sendCc(70, 127); // sustain
+                sendCc(72, 0); // release
+            } else {
+                sendCc(73, document.getElementById('env_a').value); // attack
+                sendCc(75, document.getElementById('env_d').value); // decay
+                sendCc(70, document.getElementById('env_s').value); // sustain
+                sendCc(72, document.getElementById('env_r').value); // release
+            }
+
+            // todo - update filter env
+        }
+
+        function sendNrpn(msb, lsb, val, adj)
+        {
+            sendCc(99, msb);
+            sendCc(98, lsb);
+            sendCc(6, val);
+            // todo - set adj only sometimes
+            // sendCc(38, adj);
+        }
+
+        function sendCc(cc, val, ch) {
+            let channel = ch || 0; // ch je od nuly
+            console.log('send CC='+cc+'='+val);
+            console.log([0xB0 | channel, cc, parseInt(val)]);
+            midiOut.send([0xB0 | channel, cc, parseInt(val)]);
+        }
+
+        navigator.requestMIDIAccess().then(function (midiAccess){
+            // hide MIDI disconnected warning
+            document.getElementById('warning').style.display = 'none';
+
+            //
+            globalMidiAccess = midiAccess;
+
+            // populate MIDI selector
+           let devices = document.getElementById('midi_devices');
+           midiAccess.outputs.forEach(function (output, id){
+               let opt = document.createElement('option');
+               opt.innerText = output.name;
+               opt.value = id;
+               devices.appendChild(opt);
+           });
+
+           // init rest of controls
+           initControls()
+        }, function (){
+            // todo - user disallowed
+        });
+    </script>
+</body>
+</html>
