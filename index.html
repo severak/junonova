@@ -92,6 +92,8 @@
                         </select>
                         <button id="init">INIT PRESET</button>
                         <button id="send">SEND!</button>
+                        <p>&nbsp;</p>
+                        <button id="reset">RESET ALL</button>
                         <div id="warning">MIDI not connected!</div>
                     </div>
                 </div>
@@ -101,16 +103,16 @@
                 <div class="cols">
                     <div class="slider">
                         <label for="lfo_rate">RATE</label>
-                        <input type="range" id="lfo_rate" min="0" max="127" class="vertical">
+                        <input type="range" id="lfo_rate" min="0" max="127" value="0" class="vertical">
                     </div>
                     <div class="slider">
                         <label for="lfo_delay">DELAY</label>
-                        <input type="range" id="lfo_delay" min="0" max="127" class="vertical">
+                        <input type="range" id="lfo_delay" min="0" max="127" value="0" class="vertical">
                     </div>
                     <div class="switch">
                         <label for="lfo_trig" class="nope">TRIG<br>MODE</label>
                         <select id="lfo_trig">
-                            <option>auto</option>
+                            <option selected>auto</option>
                             <option>man</option>
                         </select>
                     </div>
@@ -121,17 +123,17 @@
                 <div class="cols">
                     <div class="slider">
                         <label for="dco_lfo">LFO</label>
-                        <input type="range" id="dco_lfo" min="0" max="127" class="vertical">
+                        <input type="range" id="dco_lfo" min="0" max="127" value="0" class="vertical">
                     </div>
                     <div class="slider">
                         <label for="dco_pwm" class="nope">PWM</label>
-                        <input type="range" id="dco_pwm" min="0" max="127" class="vertical">
+                        <input type="range" id="dco_pwm" min="0" max="127" value="64" class="vertical">
                     </div>
                     <div class="switch">
                         <label for="dco_pwm_src" class="nope">PWM<br>SRC</label>
                         <select id="dco_pwm_src">
                             <option>lfo</option>
-                            <option>man</option>
+                            <option selected>man</option>
                             <option>env</option>
                         </select>
                     </div>
@@ -141,7 +143,7 @@
                             <label for="dco_part_pulse" class="ub-checkbutton">PULSE</label>
                         </div>
                         <div>
-                            <input id="dco_part_saw" type="checkbox" class="ub-checkbutton">
+                            <input id="dco_part_saw" type="checkbox" class="ub-checkbutton" checked>
                             <label for="dco_part_saw" class="ub-checkbutton">SAW</label>
                         </div>
                         <div>
@@ -151,11 +153,11 @@
                     </div>
                     <div class="slider">
                         <label for="dco_sub">SUB</label>
-                        <input type="range" id="dco_sub" min="0" max="127" class="vertical">
+                        <input type="range" id="dco_sub" min="0" max="127" value="0" class="vertical">
                     </div>
                     <div class="slider">
                         <label for="dco_noise">NOISE</label>
-                        <input type="range" id="dco_noise" min="0" max="127" class="vertical">
+                        <input type="range" id="dco_noise" min="0" max="127" value="0" class="vertical">
                     </div>
                 </div>
             </div>
@@ -164,7 +166,7 @@
                 <div class="cols">
                     <div class="slider">
                         <label for="hpf">FREQ</label>
-                        <input type="range" id="hpf" min="0" max="127" class="vertical">
+                        <input type="range" id="hpf" min="0" max="127" value="0" class="vertical">
                     </div>
                 </div>
             </div>
@@ -173,30 +175,30 @@
                 <div class="cols">
                     <div class="slider">
                         <label for="vcf_freq">FREQ</label>
-                        <input type="range" id="vcf_freq" min="0" max="127" class="vertical">
+                        <input type="range" id="vcf_freq" min="0" max="127" value="127" class="vertical">
                     </div>
                     <div class="slider">
                         <label for="vcf_res" class="nope">RES</label>
-                        <input type="range" id="vcf_res" min="0" max="127" class="vertical">
+                        <input type="range" id="vcf_res" min="0" max="127" value="0" class="vertical">
                     </div>
                     <div class="switch">
                         <label for="vcf_pol" class="nope">POL</label>
                         <select id="vcf_pol">
-                            <option>up</option>
-                            <option>down</option>
+                            <option value="1" selected>up</option>
+                            <option value="-1">down</option>
                         </select>
                     </div>
                     <div class="slider">
                         <label for="vcf_env" class="nope">ENV</label>
-                        <input type="range" id="vcf_env" min="0" max="127" class="vertical">
+                        <input type="range" id="vcf_env" min="0" max="127" value="0" class="vertical">
                     </div>
                     <div class="slider">
                         <label for="vcf_lfo" class="nope">LFO</label>
-                        <input type="range" id="vcf_lfo" min="0" max="127" class="vertical">
+                        <input type="range" id="vcf_lfo" min="0" max="127" value="0" class="vertical">
                     </div>
                     <div class="slider">
                         <label for="vcf_kbd" class="nope">KBD</label>
-                        <input type="range" id="vcf_kbd" min="0" max="127" class="vertical">
+                        <input type="range" id="vcf_kbd" min="0" max="127" value="0" class="vertical">
                     </div>
                 </div>
             </div>
@@ -206,14 +208,16 @@
                     <div class="switch">
                         <label for="vcf_pol">MODE</label>
                         <select id="vca_mode">
-                            <option>gate</option>
+                            <option selected>gate</option>
                             <option>env</option>
                         </select>
                     </div>
+                    <!-- VCA LVL not needed as we have master output on Mininova
                     <div class="slider">
                         <label for="vca_level" class="nope">LVL</label>
                         <input type="range" id="vca_level" min="0" max="127" class="vertical">
                     </div>
+                    -->
                 </div>
             </div>
             <div class="section">
@@ -221,19 +225,19 @@
                 <div class="cols">
                     <div class="slider">
                         <label for="env_a">A</label>
-                        <input type="range" id="env_a" min="0" max="127" class="vertical">
+                        <input type="range" id="env_a" min="0" max="127" value="0" class="vertical">
                     </div>
                     <div class="slider">
                         <label for="env_d">D</label>
-                        <input type="range" id="env_d" min="0" max="127" class="vertical">
+                        <input type="range" id="env_d" min="0" max="127" value="100" class="vertical">
                     </div>
                     <div class="slider">
                         <label for="env_s">S</label>
-                        <input type="range" id="env_s" min="0" max="127" class="vertical">
+                        <input type="range" id="env_s" min="0" max="127" value="0" class="vertical">
                     </div>
                     <div class="slider">
                         <label for="env_r">R</label>
-                        <input type="range" id="env_r" min="0" max="127" class="vertical">
+                        <input type="range" id="env_r" min="0" max="127" value="0" class="vertical">
                     </div>
                 </div>
             </div>
@@ -251,9 +255,12 @@
                 </div>
             </div>
         </div>
+        <hr>
         <p>Simplified control panel for Novation Mininova.</p>
         <p>Select patch you want to edit and program it like it's Roland Juno 60 and then press SAVE on Mininova itself and save preset you just created.</p>
-        <p>Work in progress! Sections and controls which are <span class="nope">crossed over</span> are not yet implemented.</p>
+        <p>Work in progress! Sections and controls which are <span class="nope">crossed over</span> are not yet implemented. Synchronization from device to computer also not implemented.</p>
+        <hr>
+        <p><small>copyleft Severák 2026</small></p>
     </div>
 
     <script>
@@ -264,6 +271,8 @@
         let dummyOut = {
             send: function () {}
         };
+
+        // todo - debug out
 
         let globalMidiAccess = false;
         let midiOut = dummyOut;
@@ -296,12 +305,18 @@
             sendCc(41, 13); // OSC3 sqr
             sendCc(48, 52); // OSC3 -12 semitones
 
+            // todo - filtry serie + balance
+
             // MODULATION MATRIX
 
             // slot 1 - LFO1 +/- -> OSC123 pitch
             sendNrpn(1, 83, 7);
             sendNrpn(1, 87, 0); // really 0
 
+            // todo - slot 2 - pwm man nebo lfo -> pwm
+            // todo - slot 3 - lfo -> vcf
+
+            // chorus
 
         }
 
@@ -310,6 +325,8 @@
 
             sendNrpn(0, 76, document.getElementById('lfo_rate').value);
             sendNrpn(0, 74, document.getElementById('lfo_delay').value);
+
+            // todo -> lfo trig mode pomocí animate
         }
 
         function updateVoices()
@@ -320,7 +337,17 @@
             sendCc(56, document.getElementById('dco_noise').value); // noise
 
             // LFO -> DCO intensity
-            sendNrpn(1, 86, (document.getElementById("dco_lfo").value/2));
+            sendNrpn(1, 86, (document.getElementById("dco_lfo").value/2)); // todo - fix this - je naopak
+
+            // todo - pwm / lfo / shit
+        }
+
+        function updateFilter()
+        {
+            // todo - hpf (0 - 64)
+            // todo - vcf (zase ne až do nuly)
+            // todo - vcf_res
+            //
         }
 
         function updateEnvelopes()
@@ -340,6 +367,8 @@
 
             // todo - update filter env
         }
+
+        // todo - chorus - https://www.reddit.com/r/synthesizers/comments/j8r4k6/juno_chorus_on_mininovaultranova/
 
         function sendNrpn(msb, lsb, val, adj)
         {
