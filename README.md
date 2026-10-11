@@ -1,13 +1,13 @@
 # JunoNova
 
-there is a Juno 60 hidden in every Mininova behind the endless menu dive
+*There is a Juno 60 hidden in every Mininova behind the endless menu dive.*
 
-## idea
+![](junonova.png)
 
-implement simplified control panel for Mininova which follows Juno 60 scheme
+Simplified hands on control panel for Novation Mininova. Select patch you want to edit, press INIT PATCH and program it like it's Roland Juno 60.
 
-## more info
+## credits
 
-- https://en.wikipedia.org/wiki/Roland_Juno-60
-- https://midi.guide/d/novation/mininova/
-- https://github.com/nclavaud/mininova-web-editor/
+Made by Severák in 2026 without using AI - I learned a lot of about Mininova MIDI inner workings, CCs and NRPNs.
+
+Based on more complete web-editor by Nicolas Clavaud - https://github.com/nclavaud/mininova-web-editor/
