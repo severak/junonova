@@ -77,6 +77,9 @@
         #warning { color: red; font-weight: bold; }
 
         .nope { text-decoration: line-through 2px; }
+        .vata { display: block; height: 10px; }
+        .footer { font-size: small; }
+        .footer a { color: white; }
     </style>
 </head>
 <body>
@@ -90,9 +93,8 @@
                         <select id="midi_devices">
                             <option disabled selected>no devices</option>
                         </select>
-                        <button id="init">INIT PRESET</button>
-                        <button id="send">SEND!</button>
-                        <p>&nbsp;</p>
+                        <button id="init">INIT PATCH</button>
+                        <div class="vata"></div>
                         <button id="reset">RESET ALL</button>
                         <div id="warning">MIDI not connected!</div>
                     </div>
@@ -110,10 +112,10 @@
                         <input type="range" id="lfo_delay" min="0" max="127" value="0" class="vertical">
                     </div>
                     <div class="switch">
-                        <label for="lfo_trig" class="nope">TRIG<br>MODE</label>
+                        <label for="lfo_trig">TRIG<br>MODE</label>
                         <select id="lfo_trig">
-                            <option selected>auto</option>
-                            <option>man</option>
+                            <option selected value="auto">auto</option>
+                            <option value="pad">pad</option>
                         </select>
                     </div>
                 </div>
@@ -126,15 +128,15 @@
                         <input type="range" id="dco_lfo" min="0" max="127" value="0" class="vertical">
                     </div>
                     <div class="slider">
-                        <label for="dco_pwm" class="nope">PWM</label>
+                        <label for="dco_pwm">PWM</label>
                         <input type="range" id="dco_pwm" min="0" max="127" value="64" class="vertical">
                     </div>
                     <div class="switch">
-                        <label for="dco_pwm_src" class="nope">PWM<br>SRC</label>
+                        <label for="dco_pwm_src">PWM<br>SRC</label>
                         <select id="dco_pwm_src">
-                            <option>lfo</option>
-                            <option selected>man</option>
-                            <option>env</option>
+                            <option value="lfo">lfo</option>
+                            <option value="man" selected>man</option>
+                            <option value="env">env</option>
                         </select>
                     </div>
                     <div class="switch">
@@ -150,6 +152,15 @@
                             <input id="dco_part_sub" type="checkbox" class="ub-checkbutton">
                             <label for="dco_part_sub" class="ub-checkbutton">SUB</label>
                         </div>
+                        <div>
+                            <div class="vata"></div>
+                        </div>
+                        <!---
+                        <div>
+                            <input id="retro" type="checkbox" class="ub-checkbutton">
+                            <label for="retro" class="ub-checkbutton">RETRO</label>
+                        </div>
+                        -->
                     </div>
                     <div class="slider">
                         <label for="dco_sub">SUB</label>
@@ -162,7 +173,7 @@
                 </div>
             </div>
             <div class="section">
-                <h2 class="nope">HPF</h2>
+                <h2>HPF</h2>
                 <div class="cols">
                     <div class="slider">
                         <label for="hpf">FREQ</label>
@@ -178,26 +189,26 @@
                         <input type="range" id="vcf_freq" min="0" max="127" value="127" class="vertical">
                     </div>
                     <div class="slider">
-                        <label for="vcf_res" class="nope">RES</label>
+                        <label for="vcf_res">RES</label>
                         <input type="range" id="vcf_res" min="0" max="127" value="0" class="vertical">
                     </div>
                     <div class="switch">
-                        <label for="vcf_pol" class="nope">POL</label>
+                        <label for="vcf_pol">POL</label>
                         <select id="vcf_pol">
-                            <option value="1" selected>up</option>
-                            <option value="-1">down</option>
+                            <option value="-1">up</option>
+                            <option value="1" selected>down</option>
                         </select>
                     </div>
                     <div class="slider">
-                        <label for="vcf_env" class="nope">ENV</label>
+                        <label for="vcf_env">ENV</label>
                         <input type="range" id="vcf_env" min="0" max="127" value="0" class="vertical">
                     </div>
                     <div class="slider">
-                        <label for="vcf_lfo" class="nope">LFO</label>
+                        <label for="vcf_lfo">LFO</label>
                         <input type="range" id="vcf_lfo" min="0" max="127" value="0" class="vertical">
                     </div>
                     <div class="slider">
-                        <label for="vcf_kbd" class="nope">KBD</label>
+                        <label for="vcf_kbd">KBD</label>
                         <input type="range" id="vcf_kbd" min="0" max="127" value="0" class="vertical">
                     </div>
                 </div>
@@ -206,7 +217,7 @@
                 <h2>VCA</h2>
                 <div class="cols">
                     <div class="switch">
-                        <label for="vcf_pol">MODE</label>
+                        <label for="vca_mode">MODE</label>
                         <select id="vca_mode">
                             <option selected>gate</option>
                             <option>env</option>
@@ -256,17 +267,20 @@
             </div>
         </div>
         <hr>
-        <p>Simplified control panel for Novation Mininova.</p>
-        <p>Select patch you want to edit and program it like it's Roland Juno 60 and then press SAVE on Mininova itself and save preset you just created.</p>
-        <p>Work in progress! Sections and controls which are <span class="nope">crossed over</span> are not yet implemented. Synchronization from device to computer also not implemented.</p>
+        <p>Simplified hands on control panel for Novation Mininova.</p>
+        <p>Select patch you want to edit, press INIT PATCH and program it like it's Roland Juno 60. Press SAVE on Mininova itself to save preset you just created.</p>
+        <p>Warning! It will happily rewrite you patches and produce some screeching sounds. Also it sometimes glitches while editing sound.</p>
+        <p>This is in progress. Sections and controls which are <span class="nope">crossed over</span> are not yet implemented. Synchronization from device to computer also not implemented.</p>
         <hr>
-        <p><small>copyleft Severák 2026</small></p>
+        <p class="footer">Made by <a href="">Severák</a> in 2026 | Based on more complete <a href="https://nclavaud.github.io/mininova-web-editor/">webeditor</a> by Nicolas Clavaud | Please report any errors on <a href="https://github.com/severak/junonova">project github</a>.</p>
     </div>
 
     <script>
         // WARNING
         //
-        // Following code is in early stage of development so it's absolute mess. It will bite you when reading it.
+        // Following code is absolute mess. It will bite you when reading it.
+        //
+        // It works though.
         //
         let dummyOut = {
             send: function () {}
@@ -286,26 +300,108 @@
                 midiOut.open();
             };
 
-            document.getElementById('send').onclick = function (ev) {
-                updateVoices();
-                updateEnvelopes();
-                updateLfo();
-               sendCc(74, document.getElementById('vcf_freq').value);
+            document.getElementById('reset').onclick = function (ev) {
+                document.getElementById('lfo_rate').value = 0;
+                document.getElementById('lfo_delay').value = 0;
+                document.getElementById('lfo_trig').selectedIndex = 0;
+                document.getElementById('dco_lfo').value = 0;
+                document.getElementById('dco_pwm').value = 64;
+                document.getElementById('dco_pwm_src').selectedIndex = 1;
+                document.getElementById('dco_part_pulse').checked = 0;
+                document.getElementById('dco_part_saw').checked = 1;
+                document.getElementById('dco_part_sub').checked = 0;
+                document.getElementById('dco_sub').value = 0;
+                document.getElementById('dco_noise').value = 0;
+                document.getElementById('hpf').value = 0;
+                document.getElementById('vcf_freq').value = 127;
+                document.getElementById('vcf_res').value = 0;
+                document.getElementById('vcf_pol').selectedIndex = 1;
+                document.getElementById('vcf_env').value = 0;
+                document.getElementById('vcf_lfo').value = 0;
+                document.getElementById('vcf_kbd').value = 0;
+                document.getElementById('vca_mode').selectedIndex = 0;
+                document.getElementById('env_a').value = 0;
+                document.getElementById('env_d').value = 100;
+                document.getElementById('env_s').value = 0;
+                document.getElementById('env_r').value = 0;
+                document.getElementById('chorus_mode').selectedIndex = 0;
+                initPatch();
+                updateAll();
             }
 
             document.getElementById('init').onclick = function (ev) {
                 initPatch();
+                updateAll();
             }
+
+            watchOut('lfo_rate', updateLfo);
+            watchOut('lfo_delay', updateLfo);
+            watchOut('lfo_trig', updateLfo);
+            watchOut('dco_lfo', updateVoices);
+            watchOut('dco_pwm', updateVoices);
+            watchOut('dco_pwm_src', updateVoices);
+            watchOut('dco_part_pulse', updateVoices);
+            watchOut('dco_part_saw', updateVoices);
+            watchOut('dco_part_sub', updateVoices);
+            watchOut('dco_sub', updateVoices);
+            watchOut('dco_noise', updateVoices);
+            watchOut('hpf', updateFilter);
+            watchOut('vcf_freq', updateFilter);
+            watchOut('vcf_pol', updateFilter);
+            watchOut('vcf_env', updateFilter);
+            watchOut('vcf_lfo', updateFilter);
+            watchOut('vcf_kbd', updateFilter);
+            watchOut('vca_mode', updateEnvelopes);
+            watchOut('env_a', updateEnvelopes);
+            watchOut('env_d', updateEnvelopes);
+            watchOut('env_s', updateEnvelopes);
+            watchOut('env_r', updateEnvelopes);
+            watchOut('chorus_mode', updateChorus);
+        }
+
+        function watchOut(el, fun)
+        {
+            // console.log(el);
+            let elem = document.getElementById(el)
+            if (!elem) {
+                console.log('cannot watch ' + el);
+            }
+            elem.onchange = function() { fun() };
+        }
+
+        function updateAll()
+        {
+            updateVoices();
+            updateEnvelopes();
+            updateLfo();
+            updateFilter();
+            updateChorus();
         }
 
         function initPatch()
         {
+            sendCc(3, 3); // Polyphone 2 voice mode (should be less glitchy)
+
             sendCc(19, 12); // OSC1 pulse
+            sendCc(21, 13); // OSC1 pw 10%
             sendCc(29, 2); // OSC2 saw
             sendCc(41, 13); // OSC3 sqr
             sendCc(48, 52); // OSC3 -12 semitones
 
-            // todo - filtry serie + balance
+            // ring mod off to be sure
+            sendCc(54, 0);
+            sendCc(55, 0);
+
+            // LFO1 common sync
+            sendNrpn(0, 122, 17);
+
+            sendCc(60, 2); // filters in series
+            sendCc(61, 127); // balance to second one
+
+            sendCc(68, 3); // filter 1 24dB LP
+            sendCc(82, 13); // filter 2 24dB HP
+            sendCc(83, 0); // fully open HP (freq down)
+            sendCc(87, 0); // filter 2 -> 0 envelope
 
             // MODULATION MATRIX
 
@@ -313,8 +409,13 @@
             sendNrpn(1, 83, 7);
             sendNrpn(1, 87, 0); // really 0
 
-            // todo - slot 2 - pwm man nebo lfo -> pwm
-            // todo - slot 3 - lfo -> vcf
+            // slot 2 - LFO1/direct/ENV -> OSC1 pw
+            sendNrpn(1, 92, 7); // mod3 -> OSC1 pw
+
+            // slot 3 - LFO1 -> filter cutoff
+            sendNrpn(1, 93, 7); // src LFO1 (unipolar)
+            sendNrpn(1, 96, 64); // depth 0
+            sendNrpn(1, 97, 21); // dest filter1 freq
 
             // chorus
 
@@ -326,7 +427,14 @@
             sendNrpn(0, 76, document.getElementById('lfo_rate').value);
             sendNrpn(0, 74, document.getElementById('lfo_delay').value);
 
-            // todo -> lfo trig mode pomocí animate
+            if (document.getElementById('lfo_trig').value=='pad') {
+                // pad1 starts LFO (mod matrix 1 has animate pad 1)
+                sendNrpn(1, 85, 1);
+                sendNrpn(1, 95, 1);
+            } else {
+                sendNrpn(1, 85, 0);
+                sendNrpn(1, 95, 0);
+            }
         }
 
         function updateVoices()
@@ -337,27 +445,60 @@
             sendCc(56, document.getElementById('dco_noise').value); // noise
 
             // LFO -> DCO intensity
-            sendNrpn(1, 86, (document.getElementById("dco_lfo").value/2)); // todo - fix this - je naopak
+            sendNrpn(1, 86, 64+(document.getElementById("dco_lfo").value/2));
 
-            // todo - pwm / lfo / shit
+            // PWM shenenigans (this part of code is dedicated to Nick Batt and his memes)
+            const PWM_SAFE_ZONE = 45; // 70% of 64
+            let pwmSrc = document.getElementById('dco_pwm_src').value;
+            let pwmValPct = document.getElementById('dco_pwm').value / 127;
+            if (pwmSrc=='man') {
+                sendNrpn(1, 88, 0); // mod2 src LFO1
+                sendCc(21, 13); // OSC1 pw 10%
+                sendNrpn(1, 91, 64+(PWM_SAFE_ZONE*pwmValPct)); // 70% mod +
+                // todo tweak2 assign
+            } else if (pwmSrc=='lfo') {
+                sendNrpn(1, 88, 6); // mod2 src LFO1
+                sendCc(21, 13); // OSC1 pw 10%
+                sendNrpn(1, 91, 64+(PWM_SAFE_ZONE*pwmValPct)); // 70% mod +
+                if (document.getElementById('lfo_trig').value=='pad') {
+                    // pad1 starts LFO (mod matrix 1 has animate pad 1)
+                    sendNrpn(1, 90, 1);
+                } else {
+                    sendNrpn(1, 90, 0);
+                }
+            } else if (pwmSrc=='env') {
+                if (document.getElementById('vca_mode').value=='gate') {
+                    sendNrpn(1, 88, 14); // mod2 src ENV1
+                } else {
+                    sendNrpn(1, 88, 12); // mod2 src ENV1
+                }
+                sendCc(21, 13); // OSC1 pw 10%
+                sendNrpn(1, 91, 64+(PWM_SAFE_ZONE*pwmValPct)); // 70% mod +
+            }
         }
 
         function updateFilter()
         {
-            // todo - hpf (0 - 64)
-            // todo - vcf (zase ne až do nuly)
-            // todo - vcf_res
-            //
+            sendCc(74, document.getElementById('vcf_freq').value);
+            sendCc(71, document.getElementById('vcf_res').value);
+            sendCc(83, document.getElementById('hpf').value/2); // can go only to half to not mute everything
+
+            let polarity = parseInt(document.getElementById('vcf_pol').value);
+            sendCc(79, 63+((document.getElementById('vcf_env').value/2)*polarity));
+
+            sendNrpn(1, 96, 64+(document.getElementById('vcf_lfo').value/2)); // depth 0
+
+            sendCc(69, document.getElementById('vcf_kbd').value);
         }
 
         function updateEnvelopes()
         {
             // update amplitude env
             if (document.getElementById('vca_mode').value=='gate') {
-                sendCc(73, 0); // attack
+                sendCc(73, 1); // attack
                 sendCc(75, 0); // decay
                 sendCc(70, 127); // sustain
-                sendCc(72, 0); // release
+                sendCc(72, 1); // release
             } else {
                 sendCc(73, document.getElementById('env_a').value); // attack
                 sendCc(75, document.getElementById('env_d').value); // decay
@@ -365,7 +506,25 @@
                 sendCc(72, document.getElementById('env_r').value); // release
             }
 
-            // todo - update filter env
+            // filter envelope
+            sendNrpn(0, 1, document.getElementById('env_a').value); // attack
+            sendNrpn(0, 2, document.getElementById('env_d').value); // decay
+            sendNrpn(0, 3, document.getElementById('env_s').value); // sustain
+            sendNrpn(0, 4, document.getElementById('env_r').value); // release
+
+            if (document.getElementById('dco_pwm_src')=='env' && document.getElementById('vca_mode').value=='gate') {
+                // env3 (for pwm)
+                sendNrpn(0, 15, document.getElementById('env_a').value); // attack
+                sendNrpn(0, 16, document.getElementById('env_d').value); // decay
+                sendNrpn(0, 17, document.getElementById('env_s').value); // sustain
+                sendNrpn(0, 18, document.getElementById('env_r').value); // release
+            }
+
+        }
+
+        function updateChorus()
+        {
+
         }
 
         // todo - chorus - https://www.reddit.com/r/synthesizers/comments/j8r4k6/juno_chorus_on_mininovaultranova/
@@ -375,38 +534,50 @@
             sendCc(99, msb);
             sendCc(98, lsb);
             sendCc(6, val);
-            // todo - set adj only sometimes
-            // sendCc(38, adj);
+            if (adj) {
+                sendCc(38, adj);
+            }
         }
 
         function sendCc(cc, val, ch) {
             let channel = ch || 0; // ch je od nuly
-            console.log('send CC='+cc+'='+val);
-            console.log([0xB0 | channel, cc, parseInt(val)]);
+            // console.log('send CC='+cc+'='+val);
+            // console.log([0xB0 | channel, cc, parseInt(val)]);
             midiOut.send([0xB0 | channel, cc, parseInt(val)]);
         }
 
-        navigator.requestMIDIAccess().then(function (midiAccess){
-            // hide MIDI disconnected warning
-            document.getElementById('warning').style.display = 'none';
+        function initMidi()
+        {
+            navigator.requestMIDIAccess().then(function (midiAccess){
+                // hide MIDI disconnected warning
+                document.getElementById('warning').style.display = 'none';
 
-            //
-            globalMidiAccess = midiAccess;
+                //
+                globalMidiAccess = midiAccess;
 
-            // populate MIDI selector
-           let devices = document.getElementById('midi_devices');
-           midiAccess.outputs.forEach(function (output, id){
-               let opt = document.createElement('option');
-               opt.innerText = output.name;
-               opt.value = id;
-               devices.appendChild(opt);
-           });
+                // populate MIDI selector
+                let devices = document.getElementById('midi_devices');
+                midiAccess.outputs.forEach(function (output, id){
+                    let opt = document.createElement('option');
+                    opt.innerText = output.name;
+                    opt.value = id;
+                    devices.appendChild(opt);
+                });
 
-           // init rest of controls
-           initControls()
-        }, function (){
-            // todo - user disallowed
-        });
+                // init rest of controls
+                initControls()
+            }, function (){
+                // todo - user disallowed
+            });
+        }
+
+        document.onreadystatechange = () => {
+            if (document.readyState === "interactive") {
+                initMidi();
+            }
+        };
+
+
     </script>
 </body>
 </html>
